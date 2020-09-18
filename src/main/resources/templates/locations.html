@@ -1,0 +1,75 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Locations</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand active" th:href="@{/locations}">examenJEE</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class=""><a th:href="@{/locations}">Les locations</a></li>
+            <li class=""><a th:href="@{/vehicules}">Les véhicules</a></li>
+        </ul>
+
+    </div>
+</nav>
+    <div class="container">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Locations par date</div>
+                <div class="panel-body">
+                    <form th:action="@{/rechercheLocation}" method="get">
+                        <div class="form-group">
+                            <label>Date location</label>
+                            <input type="date" name="datelocation">
+                            <button type="submit" class="btn btn-primary">Rechercher</button>
+                        </div>
+                    </form>
+                    <div class="text-danger" th:if="${message}" th:text="${message}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary" th:if="${listeLocations}">
+                <div class="panel-heading">Informations sur les locations par date </div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Matricule</th><th>numcartegrise</th><th>libelle modele</th>
+                                <th>libelle marque</th><th>couleur</th><th>nom client</th>
+                                <th>Prenom client</th><th>tel client</th><th>nbJour</th>
+                                <th>PrixlocationJour</th><th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="l:${listeLocations}">
+                                <td th:text="${l.vehicule.matricule}"></td>
+                                <td th:text="${l.vehicule.numcartegrise}"></td>
+                                <td th:text="${l.vehicule.modele.libelle}"></td>
+                                <td th:text="${l.vehicule.modele.marque.libelle}"></td>
+                                <td th:text="${l.vehicule.couleur}"></td>
+                                <td th:text="${l.client.nom}"></td>
+                                <td th:text="${l.client.prenom}"></td>
+                                <td th:text="${l.client.tel}"></td>
+                                <td th:text="${l.nbjour}"></td>
+                                <td th:text="${l.vehicule.prixlocationjour+' FCFA'}"></td>
+                                <td th:text="${l.vehicule.prixlocationjour * l.nbjour+' FCFA'}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

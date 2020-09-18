@@ -1,0 +1,73 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Véhicule</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand active" th:href="@{/locations}">examenJEE</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class=""><a th:href="@{/locations}">Les opérations</a></li>
+            <li class=""><a th:href="@{/vehicules}">Les véhicules</a></li>
+        </ul>
+
+    </div>
+</nav>
+<div class="container">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Liste des véhicules</div>
+            <div class="panel-body">
+                <form th:action="@{/rechercheVehicule}" method="get">
+                    <div class="form-group">
+                        <label>Modéle</label>
+                        <select name="idmodele" required class="form-control" id="service">
+                            <option value="0">-- Selectionner le modele --</option>
+                            <option th:each="m:${modeles}" th:value="${m.id}"
+                                    th:text="${m.libelle}"></option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                </form>
+                <div class="text-danger">
+
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="col-md-12">
+        <div class="panel panel-primary" th:if="${listeVehicules}">
+            <div class="panel-heading">Liste des véhicule par modele </div>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Matricule</th><th>Numcarte grise</th><th>libelle modele</th>
+                            <th>Couleur du véhicule</th><th>Prix location par Jour</th>
+                        </tr>
+                    <thead>
+                    <tbody>
+                        <tr th:each="v:${listeVehicules}">
+                            <td th:text="${v.matricule}"></td>
+                            <td th:text="${v.numcartegrise}"></td>
+                            <td th:text="${v.modele.libelle}"></td>
+                            <td th:text="${v.couleur}"></td>
+                            <td th:text="${v.prixlocationjour}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
